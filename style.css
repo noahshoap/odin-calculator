@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.calculator {
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    margin-top: auto;
+    margin-bottom: auto;
+}
