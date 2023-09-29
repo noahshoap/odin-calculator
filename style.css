@@ -57,6 +57,14 @@ button, button:focus {
     color: white;
 }
 
+.number:active {
+    background-color: rgb(160, 160, 163);
+}
+
+.operator:active {
+    background-color: rgb(192, 129, 45);
+}
+
 .operator {
     width: 100%;
     flex-grow: 1;
