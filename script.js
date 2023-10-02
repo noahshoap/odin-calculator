@@ -2,6 +2,7 @@ const display = document.querySelector(".text");
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 const evaluate = document.querySelector("#equal");
+const clear = document.querySelector("#clear");
 
 let leftNumber = null;
 let rightNumber = null;
@@ -20,6 +21,10 @@ function multiply(x, y) {
 }
 
 function divide(x, y) {
+    if (y === 0) {
+        alert("You can't divide by 0.  Quit trying.  But I'll divide by 1 for you :)");
+        return x / 1;
+    }
     return x / y;
 }
 
@@ -51,9 +56,12 @@ function operate(x, y, operator) {
     return result;
 }
 
+
+
 function updateDisplay() {
-    // for now, just replace display number with recent number
-    if (operator === null) {
+    if (leftNumber === null) {
+        display.textContent = `0`;
+    } else if (operator === null) {
         display.textContent = `${leftNumber}`;
     } else {
         if (rightNumber === null) {
@@ -91,6 +99,25 @@ function numberFromId(id) {
     }
 }
 
+function evaluateLogic() {
+    if (operator === null) return;
+    if (rightNumber === null) return;
+
+
+    console.log(`Left: ${leftNumber}`);
+    console.log(`Operator: ${operator}`);
+    console.log(`Right: ${rightNumber}`);
+
+    leftNumber = operate(leftNumber, rightNumber, operator);
+    leftNumber = leftNumber.toFixed(3);
+
+    console.log(`Result: ${leftNumber}`);
+    rightNumber = null;
+    operator = null;
+
+    updateDisplay(); 
+}
+
 numbers.forEach( (numberButton) => {
     numberButton.addEventListener('click', () => {
         if (leftNumber === null) {
@@ -112,21 +139,29 @@ numbers.forEach( (numberButton) => {
 });
 
 operators.forEach( (operatorButton) => {
+    // i gave these buttons operator styling but theyre not really operators.
+    // too lazy to fix.
+    // are you judging me?
+    // go fuck yourself
     if (operatorButton.id === 'equal') return;
+    if (operatorButton.id === 'clear') return;
 
     operatorButton.addEventListener('click', () => {
+        if (rightNumber !== null) {
+            evaluateLogic();
+        }
         operator = operatorButton.id;
     });
 });
 
+
+
 evaluate.addEventListener('click', () => {
-    console.log(`Left: ${leftNumber}`);
-    console.log(`Operator: ${operator}`);
-    console.log(`Right: ${rightNumber}`);
+    evaluateLogic();
+});
 
-    leftNumber = operate(leftNumber, rightNumber, operator);
-
-    console.log(`Result: ${leftNumber}`);
+clear.addEventListener('click', () => {
+    leftNumber = null;
     rightNumber = null;
     operator = null;
 
